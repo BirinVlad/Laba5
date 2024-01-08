@@ -1,17 +1,41 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+// Клас BankAccount
+public class BankAccount {
+    private int accountNumber;
+    private String accountName;
+    private double balance;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    public BankAccount(int accountNumber, String accountName, double initialDeposit) {
+        this.accountNumber = accountNumber;
+        this.accountName = accountName;
+        this.balance = initialDeposit;
+    }
+
+    public void deposit(double amount) throws NegativeAmountException {
+        if (amount < 0) {
+            throw new NegativeAmountException("Баланс не може бути від'ємним.");
         }
+        this.balance += amount;
+    }
+
+    public void withdraw(double amount) throws NegativeAmountException, InsufficientFundsException {
+        if (amount < 0) throw new NegativeAmountException("Сума переказу не може бути від'ємною.");
+        if (amount > balance) {
+            throw new InsufficientFundsException("Недостатньо коштів для переказу.");
+        }
+        this.balance -= amount;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getAccountSummary() {
+        return "ID облікового запису: " + accountNumber + "\nІм'я облікового запису: " + accountName + "\nБаланс: " + balance;
+    }
+
+    public int getAccountNumber() {
+        return accountNumber;
     }
 }
